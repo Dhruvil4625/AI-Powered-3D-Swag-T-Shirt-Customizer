@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from 'react'
+import React, { useRef } from 'react';
 import { easing } from 'maath';
 import { useSnapshot } from 'valtio';
 import { useFrame } from '@react-three/fiber';
@@ -13,7 +13,13 @@ const Shirt = () => {
   const { nodes, materials } = useGLTF('/shirt_baked.glb');
 
   const logoTexture = useTexture(snap.logoDecal);
+  const backLogoTexture = useTexture(snap.backLogoDecal);
   const fullTexture = useTexture(snap.fullDecal);
+  
+  // Premium Texture Rendering (Fixes blurriness at angles)
+  logoTexture.anisotropy = 16;
+  backLogoTexture.anisotropy = 16;
+  fullTexture.anisotropy = 16;
 
   useFrame((state, delta) => {
     if (materialRef.current) {
@@ -21,20 +27,21 @@ const Shirt = () => {
     }
   });
 
-  const stateString = JSON.stringify(snap);
-
   return (
     <group>
       <mesh
         castShadow
+        receiveShadow
         geometry={nodes.T_Shirt_male.geometry}
         dispose={null}
       >
         <meshStandardMaterial 
           ref={materialRef}
-          roughness={snap.roughness}
-          metalness={snap.metalness}
+          roughness={snap.roughness || 0.8} // Default values fallback
+          metalness={snap.metalness || 0.1}
+          envMapIntensity={0.8} // Allows the <Environment> to reflect beautifully
         />
+        
         {snap.isFullTexture && (
           <Decal 
             position={[0, 0, 0]}
@@ -46,12 +53,24 @@ const Shirt = () => {
 
         {snap.isLogoTexture && (
           <Decal 
-            position={[snap.logoX, snap.logoY, 0.15]}
+            position={[snap.logoX || 0, snap.logoY || 0.04, 0.15]}
             rotation={[0, 0, 0]}
-            scale={snap.logoScale}
+            scale={snap.logoScale || 0.15}
             map={logoTexture}
-            depthTest={false}
-            depthWrite={true}
+            depthTest={true} // Set to true to fix clipping issues with lighting
+            depthWrite={false}
+          />
+        )}
+        
+        {/* Back side of the shirt */}
+        {snap.isBackLogoTexture && (
+          <Decal 
+            position={[snap.backLogoX || 0, snap.backLogoY || 0.04, -0.15]}
+            rotation={[0, Math.PI, 0]} // Rotate 180 degrees to face the back
+            scale={snap.backLogoScale || 0.15}
+            map={backLogoTexture}
+            depthTest={true} 
+            depthWrite={false}
           />
         )}
       </mesh>
