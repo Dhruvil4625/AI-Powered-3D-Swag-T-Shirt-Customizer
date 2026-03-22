@@ -69,6 +69,45 @@ const TuningPicker = () => {
                         className="w-full mt-1 cursor-pointer"
                     />
                 </label>
+
+                <hr className="border-gray-300 my-2" />
+                <p className="text-xs font-bold text-gray-700 uppercase">Back Logo</p>
+                
+                <label className="text-xs font-bold text-gray-700">Back Scale
+                    <input
+                        type="range"
+                        min="0.05"
+                        max="0.5"
+                        step="0.01"
+                        value={snap.backLogoScale}
+                        onChange={(e) => state.backLogoScale = parseFloat(e.target.value)}
+                        className="w-full mt-1 cursor-pointer"
+                    />
+                </label>
+
+                <label className="text-xs font-bold text-gray-700">Back X Position
+                    <input
+                        type="range"
+                        min="-0.2"
+                        max="0.2"
+                        step="0.01"
+                        value={snap.backLogoX}
+                        onChange={(e) => state.backLogoX = parseFloat(e.target.value)}
+                        className="w-full mt-1 cursor-pointer"
+                    />
+                </label>
+
+                <label className="text-xs font-bold text-gray-700">Back Y Position
+                    <input
+                        type="range"
+                        min="-0.2"
+                        max="0.2"
+                        step="0.01"
+                        value={snap.backLogoY}
+                        onChange={(e) => state.backLogoY = parseFloat(e.target.value)}
+                        className="w-full mt-1 cursor-pointer"
+                    />
+                </label>
             </div>
         </div>
     )

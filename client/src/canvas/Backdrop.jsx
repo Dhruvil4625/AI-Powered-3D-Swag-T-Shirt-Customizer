@@ -1,6 +1,4 @@
-import React, { useRef } from 'react'
-import { easing } from 'maath'
-import { useFrame } from '@react-three/fiber'
+import React, { useRef } from 'react';
 import { AccumulativeShadows, RandomizedLight } from '@react-three/drei';
 
 const Backdrop = () => {
@@ -9,22 +7,26 @@ const Backdrop = () => {
   return (
     <AccumulativeShadows
       ref={shadows}
+      temporal
+      frames={60}
       alphaTest={0.85}
       scale={10}
       rotation={[Math.PI / 2, 0, 0]}
       position={[0, 0, -0.14]}
+      color="#000000" // Deep premium shadow color
+      colorBlend={2}
     >
       <RandomizedLight 
         amount={4}
-        radius={9}
-        intensity={0.55}
+        radius={12} // Increased radius for softer, more expensive looking shadows
+        intensity={0.6}
         ambient={0.25}
         position={[5, 5, -10]}
       />
       <RandomizedLight 
         amount={4}
-        radius={5}
-        intensity={0.25}
+        radius={9}
+        intensity={0.3}
         ambient={0.55}
         position={[-5, 5, -9]}
       />
@@ -32,4 +34,4 @@ const Backdrop = () => {
   )
 }
 
-export default Backdrop
+export default Backdrop;
