@@ -35,16 +35,16 @@ export async function POST(req) {
     const enhancedPrompt = chatResponse.choices[0].message.content.trim();
 
     const generateResponse = await openai.images.generate({
+      model: 'gpt-image-1',
       prompt: enhancedPrompt,
-      n: 1,
       size: '1024x1024',
-      response_format: 'b64_json'
+      response_format: 'b64_json',
     });
 
     const enhancedImage = generateResponse.data[0].b64_json;
     return NextResponse.json({ photo: enhancedImage, enhancedPrompt });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ message: "Something went wrong enhancing the image" }, { status: 500 });
+    return NextResponse.json({ message: error.message || "Something went wrong enhancing the image" }, { status: 500 });
   }
 }

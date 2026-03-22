@@ -5,6 +5,7 @@ import FilePicker from "./FilePicker";
 import Tab from "./Tab";
 import TuningPicker from "./TuningPicker";
 import FabricEditor from "./FabricEditor";
+import ProductPicker from "./ProductPicker";
 
 export { 
   CustomButton,
@@ -14,4 +15,5 @@ export {
   Tab,
   TuningPicker,
   FabricEditor,
+  ProductPicker,
 };

@@ -1,10 +1,9 @@
-/* 1. Imports (Must be at the very top for modern bundlers) */
+/* 1. Imports (external first, then Tailwind/Shadcn) */
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,600;1,900&display=swap");
+@import url("https://rsms.me/inter/inter.css");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,600;1,900&display=swap");
-@import url("https://rsms.me/inter/inter.css");
 
 /* 2. Shadcn Theme Configuration */
 @custom-variant dark (&:is(.dark *));
@@ -163,7 +162,7 @@
 
   /* Premium Interactive Buttons */
   .download-btn {
-    @apply w-14 h-14 flex justify-center items-center rounded-full glassmorphism cursor-pointer outline-none transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-2xl hover:shadow-primary/20;
+    @apply w-14 h-14 flex justify-center items-center rounded-full cursor-pointer outline-none transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-2xl hover:shadow-primary/20;
   }
 
   .tab-btn {
@@ -172,7 +171,7 @@
 
   /* Soft, Modern Containers */
   .editortabs-container {
-    @apply glassmorphism w-16 border-[1px] border-border/30 rounded-2xl flex flex-col justify-center items-center ml-1 py-4 gap-4;
+    @apply w-16 border-[1px] border-border/30 rounded-2xl flex flex-col justify-center items-center ml-1 py-4 gap-4;
   }
 
   .filtertabs-container {
@@ -180,11 +179,11 @@
   }
 
   .aipicker-container {
-    @apply absolute left-full ml-3 glassmorphism p-5 w-[220px] h-[220px] rounded-2xl flex flex-col gap-4 shadow-2xl transition-all duration-300;
+    @apply absolute left-full ml-3 p-5 w-[220px] h-[220px] rounded-2xl flex flex-col gap-4 shadow-2xl transition-all duration-300;
   }
 
   .filepicker-container {
-    @apply absolute left-full ml-3 glassmorphism p-5 w-[195px] h-[220px] flex flex-col rounded-2xl shadow-2xl transition-all duration-300;
+    @apply absolute left-full ml-3 p-5 w-[195px] h-[220px] flex flex-col rounded-2xl shadow-2xl transition-all duration-300;
   }
 
   /* Form Elements using Shadcn Theme Colors */

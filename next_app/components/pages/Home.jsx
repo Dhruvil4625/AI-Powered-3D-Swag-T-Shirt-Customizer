@@ -4,7 +4,7 @@ import { useSnapshot } from 'valtio';
 import Image from 'next/image';
 
 import state from '@/store';
-import { CustomButton } from '@/components';
+import CustomButton from '@/components/CustomButton';
 import {
   headContainerAnimation,
   headContentAnimation,

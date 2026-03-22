@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSnapshot } from 'valtio';
@@ -7,7 +7,7 @@ import state from '@/store';
 import { downloadCanvasToImage, reader, captureCanvasImage, downloadCanvasToPDF } from '@/config/helpers';
 import { EditorTabs, FilterTabs, DecalTypes } from '@/config/constants';
 import { fadeAnimation, slideAnimation } from '@/config/motion';
-import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab, TuningPicker, FabricEditor } from '@/components';
+import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab, TuningPicker, FabricEditor, ProductPicker } from '@/components';
 
 const Customizer = () => {
   const snap = useSnapshot(state);
@@ -18,12 +18,15 @@ const Customizer = () => {
   const [activeEditorTab, setActiveEditorTab] = useState("");
   const [activeFilterTab, setActiveFilterTab] = useState({
     logoShirt: true,
+    backLogoShirt: true,
     stylishShirt: false,
   });
 
   const generateTabContent = () => {
     switch (activeEditorTab) {
       case "colorpicker": return <ColorPicker />;
+      case "productpicker":
+        return <ProductPicker />;
       case "tuningpicker": return <TuningPicker />;
       case "fabriceditor":
         return (
@@ -73,8 +76,9 @@ const Customizer = () => {
   const handleActiveFilterTab = (tabName) => {
     switch (tabName) {
       case "logoShirt": state.isLogoTexture = !activeFilterTab[tabName]; break;
+      case "backLogoShirt": state.isBackLogoTexture = !activeFilterTab[tabName]; break;
       case "stylishShirt": state.isFullTexture = !activeFilterTab[tabName]; break;
-      default: state.isLogoTexture = true; state.isFullTexture = false; break;
+      default: state.isLogoTexture = true; state.isBackLogoTexture = true; state.isFullTexture = false; break;
     }
     setActiveFilterTab((prevState) => ({ ...prevState, [tabName]: !prevState[tabName] }));
   }

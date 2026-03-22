@@ -10,20 +10,17 @@ import state from '@/store';
 const Shirt = () => {
   const materialRef = useRef();
   const snap = useSnapshot(state);
-  const { nodes, materials } = useGLTF('/shirt_baked.glb');
+  const modelPath = state.models[snap.product] || state.models.tshirt;
+  const gltf = useGLTF(modelPath);
+  const nodes = gltf.nodes;
 
   const logoTexture = useTexture(snap.logoDecal);
   const backLogoTexture = useTexture(snap.backLogoDecal);
   const fullTexture = useTexture(snap.fullDecal);
-  
-  // Premium Texture Rendering (Fixes blurriness at angles)
-  logoTexture.anisotropy = 16;
-  backLogoTexture.anisotropy = 16;
-  fullTexture.anisotropy = 16;
 
   useFrame((state, delta) => {
     if (materialRef.current) {
-      easing.dampC(materialRef.current.color, snap.color, 0.25, delta)
+      easing.dampC(materialRef.current.color, snap.color, 0.25, delta);
     }
   });
 
@@ -32,53 +29,50 @@ const Shirt = () => {
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.T_Shirt_male.geometry}
+        geometry={(Object.values(nodes).find((n) => n?.geometry) || {}).geometry || nodes?.T_Shirt_male?.geometry}
         dispose={null}
       >
-        <meshStandardMaterial 
+        <meshStandardMaterial
           ref={materialRef}
-          roughness={snap.roughness || 0.8} // Default values fallback
+          roughness={snap.roughness || 0.8}
           metalness={snap.metalness || 0.1}
-          envMapIntensity={0.8} // Allows the <Environment> to reflect beautifully
+          envMapIntensity={0.8}
         />
-        
+
         {snap.isFullTexture && (
-          <Decal 
-            position={[0, 0, 0]}
-            rotation={[0, 0, 0]}
-            scale={1}
-            map={fullTexture}
-          />
+          <Decal position={[0, 0, 0]} rotation={[0, 0, 0]} scale={1} map={fullTexture} />
         )}
 
         {snap.isLogoTexture && (
-          <Decal 
+          <Decal
             position={[snap.logoX || 0, snap.logoY || 0.04, 0.15]}
             rotation={[0, 0, 0]}
             scale={snap.logoScale || 0.15}
             map={logoTexture}
-            depthTest={true} // Set to true to fix clipping issues with lighting
+            depthTest
             depthWrite={false}
           />
         )}
-        
-        {/* Back side of the shirt */}
+
         {snap.isBackLogoTexture && (
-          <Decal 
+          <Decal
             position={[snap.backLogoX || 0, snap.backLogoY || 0.04, -0.15]}
-            rotation={[0, Math.PI, 0]} // Rotate 180 degrees to face the back
+            rotation={[0, Math.PI, 0]}
             scale={snap.backLogoScale || 0.15}
             map={backLogoTexture}
-            depthTest={true} 
+            depthTest
             depthWrite={false}
           />
         )}
       </mesh>
     </group>
-  )
-}
+  );
+};
 
 useGLTF.preload('/shirt_baked.glb');
+useGLTF.preload('/hoodie.glb');
+useGLTF.preload('/cap.glb');
+useGLTF.preload('/women_top.glb');
 
-export default Shirt
+export default Shirt;
 

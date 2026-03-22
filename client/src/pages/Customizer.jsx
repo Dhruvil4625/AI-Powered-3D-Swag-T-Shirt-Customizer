@@ -21,6 +21,7 @@ const Customizer = () => {
   const [activeEditorTab, setActiveEditorTab] = useState("");
   const [activeFilterTab, setActiveFilterTab] = useState({
     logoShirt: true,
+    backLogoShirt: true,
     stylishShirt: false,
   })
 
@@ -105,11 +106,15 @@ const Customizer = () => {
       case "logoShirt":
           state.isLogoTexture = !activeFilterTab[tabName];
         break;
+      case "backLogoShirt":
+          state.isBackLogoTexture = !activeFilterTab[tabName];
+        break;
       case "stylishShirt":
           state.isFullTexture = !activeFilterTab[tabName];
         break;
       default:
         state.isLogoTexture = true;
+        state.isBackLogoTexture = true;
         state.isFullTexture = false;
         break;
     }

@@ -6,6 +6,10 @@ export const EditorTabs = [
     icon: swatch,
   },
   {
+    name: "productpicker",
+    icon: swatch,
+  },
+  {
     name: "fabriceditor",
     icon: swatch,
   },
@@ -29,6 +33,10 @@ export const FilterTabs = [
     icon: logoShirt,
   },
   {
+    name: "backLogoShirt",
+    icon: logoShirt,
+  },
+  {
     name: "stylishShirt",
     icon: stylishShirt,
   },
@@ -42,6 +50,10 @@ export const DecalTypes = {
   logo: {
     stateProperty: "logoDecal",
     filterTab: "logoShirt",
+  },
+  backLogo: {
+    stateProperty: "backLogoDecal",
+    filterTab: "backLogoShirt",
   },
   full: {
     stateProperty: "fullDecal",

@@ -16,17 +16,17 @@ export async function POST(req) {
     const { prompt } = await req.json();
 
     const response = await openai.images.generate({
+      model: 'gpt-image-1',
       prompt,
-      n: 1,
       size: '1024x1024',
-      response_format: 'b64_json'
+      response_format: 'b64_json',
     });
 
     const image = response.data[0].b64_json;
     return NextResponse.json({ photo: image });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ message: "Something went wrong" }, { status: 500 });
+    return NextResponse.json({ message: error.message || "Something went wrong" }, { status: 500 });
   }
 }
 

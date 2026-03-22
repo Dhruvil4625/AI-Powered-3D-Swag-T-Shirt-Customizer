@@ -7,6 +7,13 @@ const state = proxy({
   isLogoTexture: true,
   isFullTexture: false,
   isBackLogoTexture: true,
+  product: 'tshirt',
+  models: {
+    tshirt: '/shirt_baked.glb',
+    hoodie: '/hoodie.glb',
+    cap: '/cap.glb',
+    women_top: '/women_top.glb',
+  },
   logoDecal: '/threejs.png',
   fullDecal: '/threejs.png',
   backLogoDecal: '/threejs.png',
