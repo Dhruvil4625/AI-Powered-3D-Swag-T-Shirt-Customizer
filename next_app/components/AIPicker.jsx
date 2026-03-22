@@ -1,5 +1,5 @@
 "use client";
-import React from 'react'
+import React, { useState } from 'react'
 import { useSnapshot } from 'valtio';
 import state from '@/store';
 
@@ -7,6 +7,27 @@ import CustomButton from './CustomButton';
 
 const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
   const snap = useSnapshot(state);
+  const [suggesting, setSuggesting] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
+
+  const handleSuggest = async () => {
+    try {
+      setSuggesting(true);
+      const res = await fetch('/api/v1/ai/suggest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Failed to get suggestions');
+      setSuggestions(data.suggestions || []);
+      if (data.suggestions?.[0]) setPrompt(data.suggestions[0]);
+    } catch (e) {
+      alert(e);
+    } finally {
+      setSuggesting(false);
+    }
+  }
   return (
     <div className="aipicker-container">
       <textarea 
@@ -25,6 +46,12 @@ const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
           />
         ) : (
           <>
+            <CustomButton 
+              type="outline"
+              title={suggesting ? "Suggesting..." : "Suggest"}
+              handleClick={suggesting ? undefined : handleSuggest}
+              customStyles="text-xs"
+            />
             <CustomButton 
               type="outline"
               title="AI Logo"
@@ -49,6 +76,19 @@ const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
           </>
         )}
       </div>
+      {suggestions.length > 0 && (
+        <div className="mt-2 grid gap-1">
+          {suggestions.map((s, i) => (
+            <button
+              key={i}
+              onClick={() => setPrompt(s)}
+              className="text-left text-xs underline decoration-dotted hover:opacity-80"
+            >
+              {i + 1}. {s}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
