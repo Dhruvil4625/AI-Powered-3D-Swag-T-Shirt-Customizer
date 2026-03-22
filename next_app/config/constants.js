@@ -6,6 +6,10 @@ export const EditorTabs = [
     icon: swatch,
   },
   {
+    name: "fabriceditor",
+    icon: swatch,
+  },
+  {
     name: "filepicker",
     icon: fileIcon,
   },
