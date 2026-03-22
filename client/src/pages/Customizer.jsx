@@ -207,7 +207,13 @@ const Customizer = () => {
                 tab={tab}
                 isFilterTab
                 isActiveTab={activeFilterTab[tab.name]}
-                handleClick={() => handleActiveFilterTab(tab.name)}
+                handleClick={() => {
+                  if (tab.name === "download") {
+                    downloadCanvasToImage();
+                  } else {
+                    handleActiveFilterTab(tab.name);
+                  }
+                }}
               />
             ))}
           </motion.div>

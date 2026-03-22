@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSnapshot } from 'valtio';
 
-import config from '@/config/config';
 import state from '@/store';
 import { download } from '@/assets';
 import { downloadCanvasToImage, reader } from '@/config/helpers';
@@ -208,7 +207,13 @@ const Customizer = () => {
                 tab={tab}
                 isFilterTab
                 isActiveTab={activeFilterTab[tab.name]}
-                handleClick={() => handleActiveFilterTab(tab.name)}
+                handleClick={() => {
+                  if (tab.name === "download") {
+                    downloadCanvasToImage();
+                  } else {
+                    handleActiveFilterTab(tab.name);
+                  }
+                }}
               />
             ))}
           </motion.div>

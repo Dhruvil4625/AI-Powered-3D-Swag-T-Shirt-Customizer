@@ -1,6 +1,7 @@
 "use client";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSnapshot } from 'valtio';
+import Image from 'next/image';
 
 import state from '@/store';
 import { CustomButton } from '@/components';
@@ -19,11 +20,7 @@ const Home = () => {
       {snap.intro && (
         <motion.section className="home" {...slideAnimation('left')}>
           <motion.header {...slideAnimation("down")}>
-            <img 
-              src='./threejs.png'
-              alt="logo"
-              className="w-8 h-8 object-contain"
-            />
+            <Image src="/threejs.png" alt="logo" width={32} height={32} className="w-8 h-8 object-contain" />
           </motion.header>
 
           <motion.div className="home-content" {...headContainerAnimation}>

@@ -1,6 +1,7 @@
 "use client";
 import React from 'react'
 import { useSnapshot } from 'valtio'
+import Image from 'next/image';
 
 import state from '@/store';
 
@@ -18,9 +19,11 @@ const Tab = ({ tab, isFilterTab, isActiveTab, handleClick }) => {
       onClick={handleClick}
       style={activeStyles}
     >
-      <img 
+      <Image
         src={tab.icon}
         alt={tab.name}
+        width={isFilterTab ? 32 : 44}
+        height={isFilterTab ? 32 : 44}
         className={`${isFilterTab ? 'w-2/3 h-2/3' : 'w-11/12 h-11/12 object-contain'}`}
       />
     </div>
