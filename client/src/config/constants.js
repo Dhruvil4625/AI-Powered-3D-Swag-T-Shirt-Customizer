@@ -13,6 +13,10 @@ export const EditorTabs = [
     name: "aipicker",
     icon: ai,
   },
+  {
+    name: "tuningpicker",
+    icon: swatch,
+  },
 ];
 
 export const FilterTabs = [

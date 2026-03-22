@@ -1,8 +1,11 @@
 import React from 'react'
+import { useSnapshot } from 'valtio';
+import state from '../store';
 
 import CustomButton from './CustomButton';
 
 const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
+  const snap = useSnapshot(state);
   return (
     <div className="aipicker-container">
       <textarea 
@@ -34,6 +37,14 @@ const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
               handleClick={() => handleSubmit('full')}
               customStyles="text-xs"
             />
+            {snap.logoDecal !== './threejs.png' && (
+              <CustomButton 
+                type="filled"
+                title="Enhance Logo"
+                handleClick={() => handleSubmit('enhance')}
+                customStyles="text-xs border border-green-500 text-green-500 bg-green-50"
+              />
+            )}
           </>
         )}
       </div>
